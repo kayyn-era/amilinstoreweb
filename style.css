@@ -1,104 +1,117 @@
-:root {
-    --primary: #00f2ff;
+:root { 
+    --primary: #00f2fe; 
     --secondary: #7000ff;
-    --bg: #08080a;
+    --bg: #020202; 
+    --glass: rgba(255, 255, 255, 0.03);
 }
 
-* {
-    margin: 0; padding: 0; box-sizing: border-box;
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+
+body { 
+    background: var(--bg); 
+    color: white; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    min-height: 100vh; 
+    overflow: hidden; 
+    perspective: 1000px;
 }
 
-body {
-    background-color: var(--bg);
+/* Background Super Canggih */
+.bg-glow { 
+    position: absolute; width: 100%; height: 100%; 
+    background: radial-gradient(circle at center, #001a1d 0%, #050505 100%); 
+    z-index: -1; 
+}
+
+/* Animasi Scan Line */
+body::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--primary), transparent);
+    animation: scan 4s linear infinite;
+    z-index: 2;
+    opacity: 0.3;
+}
+
+@keyframes scan {
+    0% { top: -10%; }
+    100% { top: 110%; }
+}
+
+.container { 
+    width: 90%; max-width: 400px; text-align: center; z-index: 10;
+    transition: transform 0.1s ease-out;
+}
+
+.profile-img { 
+    width: 110px; height: 110px; border-radius: 50%; 
+    border: 3px solid var(--primary); 
+    box-shadow: 0 0 30px var(--primary), inset 0 0 20px var(--primary);
+    margin-bottom: 15px; object-fit: cover;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+h1 { 
+    font-family: 'Orbitron', sans-serif; font-size: 1.6rem; 
+    letter-spacing: 5px; margin-bottom: 30px; 
+    color: #fff; text-shadow: 0 0 10px var(--primary);
+}
+
+.link-wrapper { display: flex; flex-direction: column; gap: 15px; }
+
+.glass-card {
+    position: relative;
+    background: var(--glass);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 15px;
+    border-radius: 15px;
+    text-decoration: none;
     color: white;
-    font-family: 'Poppins', sans-serif;
     display: flex;
-    justify-content: center;
     align-items: center;
-    min-height: 100vh;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     overflow: hidden;
 }
 
-#canvas-dots {
-    position: fixed; top: 0; left: 0; z-index: -1;
+/* Effect Glitch pas Hover */
+.glass-card:hover { 
+    background: rgba(0, 242, 254, 0.15); 
+    transform: translateX(10px) scale(1.02); 
+    border-color: var(--primary);
+    box-shadow: -5px 0 20px var(--primary);
 }
 
-.main-container {
-    width: 90%;
-    max-width: 450px;
-    z-index: 10;
+.glass-card::after {
+    content: "";
+    position: absolute;
+    top: 0; left: -100%; width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: 0.5s;
 }
 
-.logo-area {
-    text-align: center;
-    margin-bottom: 40px;
+.glass-card:hover::after { left: 100%; }
+
+.icon-small { 
+    width: 45px; height: 45px; border-radius: 12px; 
+    margin-right: 15px; border: 1.5px solid var(--primary); 
+    filter: drop-shadow(0 0 5px var(--primary));
 }
 
-.glitch-text {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 2.5rem;
-    font-weight: 700;
-    letter-spacing: 5px;
-    color: var(--primary);
-    text-shadow: 0 0 10px rgba(0, 242, 255, 0.5);
+.text-box h3 { 
+    font-size: 0.9rem; font-weight: 600; 
+    text-transform: uppercase; letter-spacing: 1.5px; 
 }
 
-.status-badge {
-    background: rgba(255, 255, 255, 0.1);
-    padding: 5px 15px;
-    border-radius: 20px;
-    display: inline-block;
-    font-size: 0.7rem;
-    letter-spacing: 2px;
-    margin-top: 10px;
-}
-
-.dot {
-    height: 8px; width: 8px; background: #00ff88;
-    border-radius: 50%; display: inline-block;
-    margin-right: 5px; box-shadow: 0 0 10px #00ff88;
-}
-
-.link-wrapper {
-    display: flex; flex-direction: column; gap: 20px;
-}
-
-.glass-card {
-    display: flex; align-items: center;
-    padding: 20px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 15px;
-    text-decoration: none; color: white;
-    transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    backdrop-filter: blur(10px);
-}
-
-.glass-card:hover {
-    transform: translateY(-5px) scale(1.02);
-    border: 1px solid var(--primary);
-    box-shadow: 0 10px 30px rgba(0, 242, 255, 0.2);
-}
-
-.icon-box {
-    font-size: 2rem; margin-right: 20px;
-}
-
-.text-box h3 {
-    font-size: 1.1rem; letter-spacing: 1px;
-}
-
-.text-box p {
-    font-size: 0.8rem; opacity: 0.6;
-}
-
-.arrow {
-    margin-left: auto; font-size: 1.2rem; opacity: 0.5;
-}
-
-footer {
-    text-align: center; margin-top: 50px;
-    font-size: 0.7rem; opacity: 0.4;
-}
-
-.highlight { color: var(--primary); font-weight: bold; }
+.footer { 
+    margin-top: 40px; font-size: 11px; font-weight: bold;
+    color: var(--primary); opacity: 0.6; text-transform: uppercase;
+    }
